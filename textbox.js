@@ -1,18 +1,52 @@
 var debug = 1;
+var debugElement;
+var http = new XMLHttpRequest();
+http.onload = function () {
+  console.log('DONE', http.status);
+};
 
 function initTesting(testObject) {
 	var inputs = document.querySelectorAll("input[type=text]");
 	var currentElement;
 	for (var i=0;i<inputs.length;i++) {
-		// We need to exclude fields which don't have name attribute because such fields are usually
-		// no intended to be submitted.
-		// console.log(inputs[i]+"name: "+inputs[i].getAttribute('name')+" id: "+ inputs[i].getAttribute('id')+" "+inputs[i].getAttribute('type'))
 		if((testObject.name && testObject.name==inputs[i].name) || 
 			(testObject.id == inputs[i].id)) {
 			currentElement = inputs[i];
+			debugElement = inputs[i];
 		} 
 	}
 	console.log(currentElement.form);
+	startTesting(currentElement);
+}
+
+function startTesting(currentElement) {
+	log("test1");
+	sendAjax(currentElement);
+	// log("Test2")
+	// sendAjax(currentElement);
+	// var children = form.
+}
+
+function sendAjax(currentElement){
+	var form = currentElement.form;
+
+	var url = form.action;
+	var params0 = 'log=admin&pwd=pass&wp-submit=Log+In&redirect_to=https%3A%2F%2Fdemos1.softaculous.com%2FWordPress%2Fwp-admin%2F&testcookie=1';
+	var params1 = '<script\x20type="text/javascript">javascript:alert(1);</script>';
+	http.open("POST", url, true);
+
+    // var textfield1 = document.getElementsByName('first_name')[0].elements;
+	param = params0;		
+	xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+           console.log(this.responseText);
+       }
+    };
+	http.send(param);
+	console.log(http.status)
+if (http.readyState == 4 && http.status == 200){
+		console.log(http.responseText);
+	}
 }
 
 function log(str) {
@@ -514,5 +548,4 @@ var blns = [
      "Um9zZXMgYXJlIBtbMDszMW1yZWQbWzBtLCB2aW9sZXRzIGFyZSAbWzA7MzRtYmx1ZS4gSG9wZSB5b3UgZW5qb3kgdGVybWluYWwgaHVlCg==",
      "QnV0IG5vdy4uLhtbMjBDZm9yIG15IGdyZWF0ZXN0IHRyaWNrLi4uG1s4bQo=",
      "VGhlIHF1aWMICAgICAhrIGJyb3duIGZvBwcHBwcHBwcHBwd4Li4uIFtCZWVlZXBdCg==",
-     "UG93ZXLZhNmP2YTZj9i12ZHYqNmP2YTZj9mE2LXZkdio2Y/Ysdix2Ysg4KWjIOClo2gg4KWjIOClo+WGlwo="
- ]
+     "UG93ZXLZhNmP2YTZj9i12ZHYqNmP2YTZj9mE2LXZkdio2Y/Ysdix2Ysg4KWjIOClo2gg4KWjIOClo+WGlwo="];
