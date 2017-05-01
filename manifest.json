@@ -4,20 +4,19 @@
   "description": "This plugin tests a web application for bugs/ vulnerabilities using the big list of naughty strings",
   "version": "1.0",
   "browser_action": {
-    "default_popup": "sidebar.html"
+    "default_popup": "homepage.html"
   },
   "content_scripts": [
     {
-      "matches": ["*://*/*"],
+      "matches": ["<all_urls>"],
       "js": ["textbox.js"]
     }
   ],
   "background": {
-    "scripts": ["background.js"],
+    "scripts": ["taginput.js"],
     "persistent": false
   },
   "permissions": [
-    "activeTab",
-    "storage"
+    "activeTab"
   ]
 }
