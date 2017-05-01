@@ -1,44 +1,3 @@
-// /*Handle requests from background.html*/
-// function handleRequest(
-// 	//The object data with the request params
-// 	request, 
-// 	//These last two ones isn't important for this example, if you want know more about it visit: http://code.google.com/chrome/extensions/messaging.html
-// 	sender, sendResponse
-// 	) {
-// 	if (request.callFunction == "toggleSidebar")
-// 		toggleSidebar();
-// }
-// chrome.extension.onRequest.addListener(handleRequest);
-
-// /*Small function wich create a sidebar(just to illustrate my point)*/
-// var sidebarOpen = false;
-// function toggleSidebar() {
-// 	if(sidebarOpen) {
-// 		var el = document.getElementById('mySidebar');
-// 		el.parentNode.removeChild(el);
-// 		sidebarOpen = false;
-// 	}
-// 	else {
-// 		var sidebar = document.createElement('div');
-// 		sidebar.id = "mySidebar";
-// 		sidebar.innerHTML = "\
-// 			<h1>Hello</h1>\
-// 			World!\
-// 		";
-// 		sidebar.style.cssText = "\
-// 			position:fixed\
-// 			top:0px;\
-// 			left:0px;\
-// 			width:30%;\
-// 			height:100%;\
-// 			background:white;\
-// 			box-shadow:inset 0 0 1em black;\
-// 			z-index:999999;\
-// 		";
-// 		document.body.appendChild(sidebar);
-// 		sidebarOpen = true;
-// 	}
-// }
 var debug = 1;
 
 function initTesting(testObject) {
@@ -71,28 +30,17 @@ chrome.runtime.onMessage.addListener(
 				for (var i=0;i<inputs.length;i++) {
 					// We need to exclude fields which don't have name attribute because such fields are usually
 					// no intended to be submitted.
-					// console.log(inputs[i]+"name: "+inputs[i].getAttribute('name')+" id: "+ inputs[i].getAttribute('id')+" "+inputs[i].getAttribute('type'))
-					// inputs[i].setA
 					var myobject = new Object();
 					myobject.name = inputs[i].name;
 					myobject.id = inputs[i].id;
 					testableInputs.push(JSON.stringify(myobject));
 					log(testableInputs);
 				}
-				// var inputs = document.getElementsByTagName('input');
-				// console.log("initial array" + inputs)
-				// for (var i=0;i<inputs.length;i++) {
-				// 	console.log(inputs[i].name+"   name: "+inputs[i].getAttribute('name')+" id: "+ inputs[i].getAttribute('id')+" "+inputs[i].getAttribute('type'))
-				// 	if(inputs[i].getAttribute("type")=='text') {
-				// 		testableInputs.push("name: "+inputs[i].getAttribute('name')+"id: "+ inputs[i].getAttribute('id'));
-				// 		console.log(testableInputs);
-				// 	}
-				// }
                 log("correct query received");
                 sendResponse(testableInputs);
                 break;
             case "pushTestingField":
-            	// console.log("got message" + message.fieldToBeTested);
+            	log("got message" + message.fieldToBeTested);
             	var testingObject = JSON.parse(message.fieldToBeTested);
             	initTesting(testingObject);
             	break;
